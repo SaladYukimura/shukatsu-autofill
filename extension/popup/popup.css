@@ -8,45 +8,43 @@ body {
   width: 360px;
   font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
   font-size: 13px;
-  color: #dde6ff;
-  background: #0a1628;
+  color: #1a1a1a;
+  background: #f7f8fa;
 }
 
 /* ===== ヘッダー ===== */
 .header {
-  background: linear-gradient(135deg, #0f2040 0%, #0a1628 100%);
-  color: #dde6ff;
-  padding: 14px 16px;
+  background: linear-gradient(135deg, #0f2040 0%, #1a3a6e 100%);
+  color: white;
+  padding: 12px 16px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  border-bottom: 1px solid rgba(200,170,80,0.3);
+  gap: 8px;
 }
 
 .header img {
-  width: 22px;
-  height: 22px;
-  border-radius: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
 }
 
 .header h1 {
   font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  color: #e8f0ff;
+  letter-spacing: 0.03em;
 }
 
 /* ===== セクション ===== */
 .section {
-  padding: 14px 16px;
+  padding: 16px;
 }
 
 .section-title {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
-  color: #c8aa50;
+  color: #0f2040;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.07em;
   margin-bottom: 8px;
 }
 
@@ -58,9 +56,8 @@ body {
 .form-group label {
   display: block;
   font-size: 11px;
-  color: #7a8db5;
+  color: #555;
   margin-bottom: 3px;
-  letter-spacing: 0.02em;
 }
 
 .form-row {
@@ -79,31 +76,19 @@ input[type="number"],
 select,
 textarea {
   width: 100%;
-  padding: 7px 10px;
-  border: 1px solid #1e3060;
+  padding: 6px 8px;
+  border: 1px solid #d0d5dd;
   border-radius: 6px;
   font-size: 13px;
-  background: #0d1e3d;
-  color: #dde6ff;
+  background: white;
+  color: #1a1a1a;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.15s;
 }
 
-input::placeholder,
-textarea::placeholder {
-  color: #3a4e6e;
-}
-
-select option {
-  background: #0d1e3d;
-  color: #dde6ff;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: #4a7fff;
-  box-shadow: 0 0 0 2px rgba(74,127,255,0.15);
+input:focus, select:focus, textarea:focus {
+  border-color: #1a3a6e;
+  box-shadow: 0 0 0 2px rgba(15,32,64,0.1);
 }
 
 /* ===== ボタン ===== */
@@ -112,98 +97,76 @@ textarea:focus {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 9px 14px;
+  padding: 8px 14px;
   border-radius: 8px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   border: none;
-  transition: all 0.2s;
-  letter-spacing: 0.02em;
+  transition: background 0.15s, opacity 0.15s;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #1e56e8, #1240c8);
-  color: #fff;
+  background: #0f2040;
+  color: white;
   width: 100%;
-  box-shadow: 0 2px 12px rgba(30,86,232,0.35);
 }
-.btn-primary:hover {
-  background: linear-gradient(135deg, #2a64f0, #1a4ae0);
-  box-shadow: 0 4px 16px rgba(30,86,232,0.45);
-}
+.btn-primary:hover { background: #1a3a6e; }
 
 .btn-success {
-  background: linear-gradient(135deg, #1e56e8, #1240c8);
-  color: #fff;
+  background: #0f2040;
+  color: white;
   width: 100%;
   font-size: 14px;
-  padding: 11px;
-  border: 1px solid rgba(200,170,80,0.4);
-  box-shadow: 0 2px 16px rgba(30,86,232,0.3);
-  letter-spacing: 0.03em;
+  padding: 10px;
 }
-.btn-success:hover {
-  background: linear-gradient(135deg, #2a64f0, #1a4ae0);
-  border-color: rgba(200,170,80,0.7);
-  box-shadow: 0 4px 20px rgba(30,86,232,0.4);
-}
+.btn-success:hover { background: #1a3a6e; }
 
 .btn-secondary {
-  background: transparent;
-  color: #7a8db5;
-  border: 1px solid #1e3060;
+  background: white;
+  color: #444;
+  border: 1px solid #d0d5dd;
   width: 100%;
   margin-top: 6px;
 }
-.btn-secondary:hover {
-  background: #0f2040;
-  color: #dde6ff;
-}
+.btn-secondary:hover { background: #f3f4f6; }
 
 .btn-danger {
   background: transparent;
-  color: #f87171;
-  border: 1px solid rgba(248,113,113,0.3);
+  color: #dc2626;
+  border: 1px solid #fca5a5;
   font-size: 12px;
-  padding: 5px 12px;
+  padding: 5px 10px;
 }
-.btn-danger:hover {
-  background: rgba(248,113,113,0.08);
-}
+.btn-danger:hover { background: #fee2e2; }
 
 .btn:disabled {
-  opacity: 0.4;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 /* ===== タブ ===== */
 .tabs {
   display: flex;
-  background: #0d1e3d;
-  border-bottom: 1px solid #1a2e58;
+  border-bottom: 1px solid #e5e7eb;
+  background: white;
 }
 
 .tab {
   flex: 1;
-  padding: 9px 4px;
+  padding: 8px;
   text-align: center;
-  font-size: 11px;
-  color: #4a5e88;
+  font-size: 12px;
+  color: #666;
   cursor: pointer;
   border-bottom: 2px solid transparent;
-  transition: all 0.2s;
-  letter-spacing: 0.02em;
+  transition: all 0.15s;
 }
 
 .tab.active {
-  color: #c8aa50;
-  border-bottom-color: #c8aa50;
-  font-weight: 700;
-}
-
-.tab:hover:not(.active) {
-  color: #8899bb;
+  color: #0f2040;
+  border-bottom-color: #0f2040;
+  font-weight: 600;
 }
 
 .tab-content { display: none; }
@@ -211,54 +174,47 @@ textarea:focus {
 
 /* ===== ロック画面 ===== */
 #screen-lock {
-  padding: 32px 20px;
+  padding: 24px 16px;
   text-align: center;
-  background: #0a1628;
 }
 
 #screen-lock .lock-icon {
-  font-size: 40px;
-  margin-bottom: 14px;
-  filter: drop-shadow(0 0 8px rgba(200,170,80,0.4));
+  font-size: 36px;
+  margin-bottom: 12px;
 }
 
 #screen-lock p {
-  color: #7a8db5;
-  margin-bottom: 18px;
+  color: #555;
+  margin-bottom: 16px;
   font-size: 13px;
-  letter-spacing: 0.02em;
 }
 
 /* ===== セットアップ画面 ===== */
 #screen-setup {
-  padding: 22px 18px;
-  background: #0a1628;
+  padding: 20px 16px;
 }
 
 #screen-setup h2 {
   font-size: 15px;
   margin-bottom: 6px;
-  color: #e8f0ff;
-  font-weight: 700;
-  letter-spacing: 0.04em;
 }
 
 #screen-setup .desc {
   font-size: 12px;
-  color: #5a6e94;
-  margin-bottom: 14px;
-  line-height: 1.6;
+  color: #666;
+  margin-bottom: 12px;
+  line-height: 1.5;
 }
 
 .warn-box {
-  background: rgba(200,170,80,0.08);
-  border: 1px solid rgba(200,170,80,0.35);
-  border-radius: 7px;
-  padding: 11px 13px;
+  background: #fff8e1;
+  border: 1px solid #f6c000;
+  border-radius: 6px;
+  padding: 10px 12px;
   font-size: 12px;
-  line-height: 1.65;
-  color: #c8aa50;
-  margin-bottom: 18px;
+  line-height: 1.6;
+  color: #5a4000;
+  margin-bottom: 16px;
 }
 
 /* ===== メイン画面 ===== */
@@ -266,17 +222,17 @@ textarea:focus {
 
 /* ===== 自動入力ボタンエリア ===== */
 .fill-area {
-  padding: 14px 16px;
-  background: #0d1e3d;
-  border-bottom: 1px solid #1a2e58;
+  padding: 12px 16px;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
 }
 
 /* ===== 大学コピー補助 ===== */
 .edu-hint {
   margin-top: 10px;
-  padding: 10px 12px;
-  background: rgba(74,127,255,0.07);
-  border: 1px solid rgba(74,127,255,0.2);
+  padding: 10px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
   border-radius: 8px;
   font-size: 12px;
   display: none;
@@ -285,49 +241,39 @@ textarea:focus {
 .edu-hint.visible { display: block; }
 
 .edu-hint .edu-title {
-  font-weight: 700;
-  color: #4a7fff;
-  margin-bottom: 8px;
-  letter-spacing: 0.02em;
+  font-weight: 600;
+  color: #1d4ed8;
+  margin-bottom: 6px;
 }
 
 .edu-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 0;
-  border-bottom: 1px solid rgba(74,127,255,0.1);
+  padding: 3px 0;
+  border-bottom: 1px solid #dbeafe;
 }
 
 .edu-row:last-child { border-bottom: none; }
-
-.edu-row .edu-label { color: #5a6e94; }
+.edu-row .edu-label { color: #555; }
 
 .edu-row .edu-value {
-  font-weight: 600;
-  color: #a8c0ff;
+  font-weight: 500;
+  color: #1e40af;
 }
 
 .copy-btn {
-  background: rgba(30,86,232,0.3);
-  color: #8ab0ff;
-  border: 1px solid rgba(30,86,232,0.4);
+  background: #0f2040;
+  color: white;
+  border: none;
   border-radius: 4px;
-  padding: 2px 8px;
+  padding: 2px 7px;
   font-size: 11px;
   cursor: pointer;
-  transition: all 0.15s;
 }
 
-.copy-btn:hover {
-  background: rgba(30,86,232,0.5);
-  color: #fff;
-}
-.copy-btn.copied {
-  background: rgba(22,163,74,0.3);
-  border-color: rgba(22,163,74,0.4);
-  color: #4ade80;
-}
+.copy-btn:hover { background: #1a3a6e; }
+.copy-btn.copied { background: #16a34a; }
 
 /* ===== ステータスメッセージ ===== */
 .status {
@@ -339,46 +285,41 @@ textarea:focus {
 }
 
 .status.success {
-  background: rgba(22,163,74,0.12);
-  color: #4ade80;
-  border: 1px solid rgba(22,163,74,0.25);
+  background: #dcfce7;
+  color: #15803d;
   display: block;
 }
 
 .status.error {
-  background: rgba(248,113,113,0.1);
-  color: #f87171;
-  border: 1px solid rgba(248,113,113,0.25);
+  background: #fee2e2;
+  color: #dc2626;
   display: block;
 }
 
 .status.info {
-  background: rgba(74,127,255,0.1);
-  color: #7aadff;
-  border: 1px solid rgba(74,127,255,0.25);
+  background: #eff6ff;
+  color: #1d4ed8;
   display: block;
 }
 
 /* ===== フッター ===== */
 .footer {
-  padding: 9px 16px;
+  padding: 8px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: 1px solid #1a2e58;
-  background: #0d1e3d;
+  border-top: 1px solid #e5e7eb;
 }
 
 .footer-note {
   font-size: 11px;
-  color: #3a4e6e;
-  letter-spacing: 0.02em;
+  color: #aaa;
 }
 
 /* ===== divider ===== */
 .divider {
   height: 1px;
-  background: #1a2e58;
+  background: #e5e7eb;
   margin: 0 0 12px 0;
 }
 
@@ -386,24 +327,12 @@ textarea:focus {
 .scrollable {
   max-height: 420px;
   overflow-y: auto;
-  background: #0a1628;
-}
-
-.scrollable::-webkit-scrollbar {
-  width: 4px;
-}
-.scrollable::-webkit-scrollbar-track {
-  background: #0a1628;
-}
-.scrollable::-webkit-scrollbar-thumb {
-  background: #1e3060;
-  border-radius: 2px;
 }
 
 /* ===== チェックボックス ===== */
 input[type="checkbox"] {
   width: auto;
-  accent-color: #4a7fff;
+  accent-color: #0f2040;
 }
 
 /* ===== 住所チェックボックスエリア ===== */
@@ -411,8 +340,8 @@ input[type="checkbox"] {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(74,127,255,0.07);
-  border: 1px solid rgba(74,127,255,0.2);
+  background: #f0f4ff;
+  border: 1px solid #c7d4f0;
   padding: 8px 10px;
   border-radius: 6px;
   margin-bottom: 10px;
@@ -421,23 +350,23 @@ input[type="checkbox"] {
 .same-address-box label {
   margin: 0;
   font-size: 12px;
-  color: #7aadff;
+  color: #0f2040;
   cursor: pointer;
 }
 
 /* ===== 保存エリア ===== */
 .save-area {
   padding: 10px 16px;
-  background: #0d1e3d;
-  border-top: 1px solid #1a2e58;
+  background: white;
+  border-top: 1px solid #e5e7eb;
 }
 
 /* ===== アンケートノート ===== */
 .survey-note {
   font-size: 11px;
-  color: #4a5e88;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid #1a2e58;
+  color: #6b7280;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
   padding: 8px 10px;
   border-radius: 6px;
   margin-bottom: 12px;
@@ -452,7 +381,6 @@ input[type="checkbox"] {
   margin-top: 4px;
 }
 
-.checkbox-grid label,
 .checkbox-label {
   display: flex;
   align-items: center;
@@ -460,10 +388,5 @@ input[type="checkbox"] {
   font-weight: normal;
   cursor: pointer;
   font-size: 12px;
-  color: #7a8db5;
-}
-
-.checkbox-grid label:hover,
-.checkbox-label:hover {
-  color: #dde6ff;
+  color: #374151;
 }
