@@ -75,18 +75,30 @@ const FormFiller = (() => {
 
   function selectRadioByText(radios, value) {
     const target = String(value).trim();
+
+    // "大学/University" のようなスラッシュ区切り多言語ラベルを考慮したスコア
+    function score(label) {
+      if (label === target) return 4;
+      // スラッシュで分割して各部分と完全一致
+      const parts = label.split('/').map(p => p.trim());
+      if (parts.some(p => p === target)) return 3;
+      // 先頭一致（次が区切り文字または終端 — "大学院"が"大学"にマッチしないようにする）
+      if (label.startsWith(target)) {
+        const next = label[target.length];
+        if (!next || /[\s\/\-（）()]/.test(next)) return 2;
+      }
+      // 部分一致（フォールバック）
+      if (label.includes(target) || target.includes(label)) return 1;
+      return 0;
+    }
+
+    let best = null, bestScore = 0;
     for (const radio of radios) {
       const label = FieldMatcher.getRadioOptionLabel(radio);
-      if (label === target || label.startsWith(target) || target.startsWith(label)) {
-        clickJqRadio(radio); return true;
-      }
+      const s = score(label);
+      if (s > bestScore) { bestScore = s; best = radio; }
     }
-    for (const radio of radios) {
-      const label = FieldMatcher.getRadioOptionLabel(radio);
-      if (label.includes(target) || target.includes(label)) {
-        clickJqRadio(radio); return true;
-      }
-    }
+    if (bestScore > 0 && best) { clickJqRadio(best); return true; }
     return false;
   }
 
