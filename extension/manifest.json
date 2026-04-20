@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "就活マイページ 自動入力",
+  "name": "就活 AutoFill",
   "version": "0.1.0",
-  "description": "企業マイページへの基本情報入力を自動化します。データはすべてお使いのPC内にのみ保存されます。",
+  "description": "企業マイページへの基本情報入力を自動化します。i-web・axol対応。データはすべてお使いのPC内にのみ保存されます。",
   "permissions": ["storage", "activeTab", "scripting"],
   "host_permissions": ["<all_urls>"],
   "action": {
