@@ -26,10 +26,11 @@ const FieldMatcher = (() => {
     birthDay:      ['birth_day', 'birthdate_day', 'day_of_birth', 'bd_day', 'bday', 'birthday_day',
                     'dbirth', 'birth_nichi', 'seibirth_d',
                     'birth_d'],                             // axol
-    // 現住所 / 休暇住所 両方を postalCode で拾う（axol: yubing_h/l = 前半/後半）
     postalCode:    ['postal', 'zip', 'post_no', 'postal_code', 'postcode',
-                    'yubin', 'gyubin', 'kyubin', 'zipcode',
-                    'yubing_h', 'yubing_l', 'yubink_h', 'yubink_l'],  // axol
+                    'yubin', 'gyubin', 'kyubin', 'zipcode'],
+    // axol: 郵便番号2分割（上3桁 / 下4桁）現住所・休暇住所それぞれ
+    postalCodeH:   ['yubing_h', 'yubink_h'],
+    postalCodeL:   ['yubing_l', 'yubink_l'],
     // 都道府県（axol: keng=現住所, kenk=休暇）
     prefecture:    ['pref', 'prefecture', 'todofuken', 'ken', 'gken', 'kken',
                     'keng', 'kenk'],                        // axol

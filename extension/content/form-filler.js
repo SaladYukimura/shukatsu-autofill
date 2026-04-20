@@ -187,6 +187,9 @@ const FormFiller = (() => {
       birthMonth:    profile.birthdate?.split('-')[1]?.replace(/^0/, ''),
       birthDay:      profile.birthdate?.split('-')[2]?.replace(/^0/, ''),
       postalCode:    address?.postalCode,
+      // axol 2分割郵便番号
+      postalCodeH:   address?.postalCode ? address.postalCode.replace(/\D/g, '').slice(0, 3) : '',
+      postalCodeL:   address?.postalCode ? address.postalCode.replace(/\D/g, '').slice(3)    : '',
       prefecture:    address?.prefecture,
       cityStreet:    [address?.city, address?.street].filter(Boolean).join(' '),
       city:          address?.city,
@@ -231,7 +234,7 @@ const FormFiller = (() => {
   }
 
   // checkSameAddress=true のとき入力を現住所のみに絞るフィールド種別
-  const VACATION_SKIP_TYPES = new Set(['postalCode', 'prefecture', 'cityStreet', 'city', 'street', 'apartment', 'phone', 'mobile']);
+  const VACATION_SKIP_TYPES = new Set(['postalCode', 'postalCodeH', 'postalCodeL', 'prefecture', 'cityStreet', 'city', 'street', 'apartment', 'phone', 'mobile']);
 
   function fillAll(fieldMap, profile) {
     let filledCount = 0;
