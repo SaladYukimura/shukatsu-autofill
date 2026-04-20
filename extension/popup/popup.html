@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>就活マイページ 自動入力</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+<div class="header">
+  <span>📋</span>
+  <h1>就活マイページ 自動入力</h1>
+</div>
+
+<!-- ===== セットアップ画面（初回） ===== -->
+<div id="screen-setup" style="display:none">
+  <h2>初回設定</h2>
+  <p class="desc">
+    プロフィールデータはこのPC内にのみ保存されます。<br>
+    マスターパスワードを設定して、データを暗号化します。
+  </p>
+  <div class="form-group">
+    <label>マスターパスワード</label>
+    <input type="password" id="setup-password" placeholder="8文字以上を推奨">
+  </div>
+  <div class="form-group">
+    <label>パスワード確認</label>
+    <input type="password" id="setup-password-confirm" placeholder="もう一度入力">
+  </div>
+  <div id="setup-status" class="status"></div>
+  <button class="btn btn-primary" id="btn-setup" style="margin-top:12px">
+    設定してプロフィール入力へ →
+  </button>
+</div>
+
+<!-- ===== ロック画面 ===== -->
+<div id="screen-lock" style="display:none">
+  <div class="lock-icon">🔒</div>
+  <p>マスターパスワードを入力してください</p>
+  <div class="form-group">
+    <input type="password" id="lock-password" placeholder="パスワード">
+  </div>
+  <div id="lock-status" class="status"></div>
+  <button class="btn btn-primary" id="btn-unlock" style="margin-top:12px">
+    解錠する
+  </button>
+</div>
+
+<!-- ===== メイン画面 ===== -->
+<div id="screen-main" style="display:none">
+
+  <!-- 自動入力ボタン -->
+  <div class="fill-area">
+    <button class="btn btn-success" id="btn-fill">
+      ✏️ このページに自動入力
+    </button>
+    <div id="fill-status" class="status"></div>
+
+    <!-- 大学選択補助（マルチステップ選択の手動補助） -->
+    <div class="edu-hint" id="edu-hint">
+      <div class="edu-title">🎓 大学選択の補助情報（手動でコピーしてください）</div>
+      <div class="edu-row">
+        <span class="edu-label">学校区分</span>
+        <span class="edu-value" id="hint-type"></span>
+        <button class="copy-btn" data-target="hint-type">コピー</button>
+      </div>
+      <div class="edu-row">
+        <span class="edu-label">大学名</span>
+        <span class="edu-value" id="hint-name"></span>
+        <button class="copy-btn" data-target="hint-name">コピー</button>
+      </div>
+      <div class="edu-row">
+        <span class="edu-label">頭文字</span>
+        <span class="edu-value" id="hint-first-char"></span>
+      </div>
+      <div class="edu-row">
+        <span class="edu-label">所在地</span>
+        <span class="edu-value" id="hint-pref"></span>
+      </div>
+      <div class="edu-row">
+        <span class="edu-label">学部</span>
+        <span class="edu-value" id="hint-faculty"></span>
+        <button class="copy-btn" data-target="hint-faculty">コピー</button>
+      </div>
+      <div class="edu-row">
+        <span class="edu-label">学科</span>
+        <span class="edu-value" id="hint-dept"></span>
+        <button class="copy-btn" data-target="hint-dept">コピー</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- タブ -->
+  <div class="tabs">
+    <div class="tab active" data-tab="basic">基本情報</div>
+    <div class="tab" data-tab="address">住所</div>
+    <div class="tab" data-tab="education">学歴</div>
+    <div class="tab" data-tab="survey">アンケート</div>
+  </div>
+
+  <div class="scrollable">
+
+    <!-- 基本情報タブ -->
+    <div class="tab-content active" id="tab-basic">
+      <div class="section">
+        <div class="section-title">氏名</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>姓（漢字）</label>
+            <input type="text" id="p-lastName" placeholder="山田">
+          </div>
+          <div class="form-group">
+            <label>名（漢字）</label>
+            <input type="text" id="p-firstName" placeholder="太郎">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>セイ（カタカナ）</label>
+            <input type="text" id="p-lastNameKana" placeholder="ヤマダ">
+          </div>
+          <div class="form-group">
+            <label>メイ（カタカナ）</label>
+            <input type="text" id="p-firstNameKana" placeholder="タロウ">
+          </div>
+        </div>
+
+        <div class="divider" style="margin-top:12px"></div>
+        <div class="section-title">生年月日</div>
+        <div class="form-group">
+          <input type="text" id="p-birthdate" placeholder="YYYY-MM-DD（例: 2003-04-01）">
+        </div>
+
+        <div class="divider" style="margin-top:12px"></div>
+        <div class="section-title">連絡先</div>
+        <div class="form-group">
+          <label>メールアドレス</label>
+          <input type="email" id="p-email" placeholder="example@example.com">
+        </div>
+        <div class="form-group">
+          <label>電話番号（固定）</label>
+          <input type="text" id="p-phone" placeholder="03-1111-1111">
+        </div>
+        <div class="form-group">
+          <label>携帯電話番号</label>
+          <input type="text" id="p-mobile" placeholder="090-0000-0000">
+        </div>
+      </div>
+    </div>
+
+    <!-- 住所タブ -->
+    <div class="tab-content" id="tab-address">
+      <div class="section">
+        <div class="section-title">住所</div>
+        <div class="form-group" style="display:flex;align-items:center;gap:8px;background:#eff6ff;padding:8px;border-radius:6px;margin-bottom:10px;">
+          <input type="checkbox" id="p-same-address" style="width:auto;margin:0;" checked>
+          <label for="p-same-address" style="margin:0;font-size:12px;color:#1d4ed8;cursor:pointer;">「休暇中の住所は現住所と同じ」を自動でチェックする</label>
+        </div>
+        <div class="form-group">
+          <label>郵便番号（ハイフンあり）</label>
+          <input type="text" id="p-postalCode" placeholder="111-0000">
+        </div>
+        <div class="form-group">
+          <label>都道府県</label>
+          <select id="p-prefecture">
+            <option value="">選択してください</option>
+            <option>北海道</option><option>青森県</option><option>岩手県</option>
+            <option>宮城県</option><option>秋田県</option><option>山形県</option>
+            <option>福島県</option><option>茨城県</option><option>栃木県</option>
+            <option>群馬県</option><option>埼玉県</option><option>千葉県</option>
+            <option>東京都</option><option>神奈川県</option><option>新潟県</option>
+            <option>富山県</option><option>石川県</option><option>福井県</option>
+            <option>山梨県</option><option>長野県</option><option>岐阜県</option>
+            <option>静岡県</option><option>愛知県</option><option>三重県</option>
+            <option>滋賀県</option><option>京都府</option><option>大阪府</option>
+            <option>兵庫県</option><option>奈良県</option><option>和歌山県</option>
+            <option>鳥取県</option><option>島根県</option><option>岡山県</option>
+            <option>広島県</option><option>山口県</option><option>徳島県</option>
+            <option>香川県</option><option>愛媛県</option><option>高知県</option>
+            <option>福岡県</option><option>佐賀県</option><option>長崎県</option>
+            <option>熊本県</option><option>大分県</option><option>宮崎県</option>
+            <option>鹿児島県</option><option>沖縄県</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>市区郡町村（全角）</label>
+          <input type="text" id="p-city" placeholder="千代田区">
+        </div>
+        <div class="form-group">
+          <label>番地・丁目（全角）<span style="color:#9ca3af;font-weight:normal;font-size:11px">　i-webでは上と結合して入力</span></label>
+          <input type="text" id="p-street" placeholder="丸の内１－１－１">
+        </div>
+        <div class="form-group">
+          <label>アパート・マンション名（全角・任意）</label>
+          <input type="text" id="p-apartment" placeholder="日本マンション１０１">
+        </div>
+      </div>
+    </div>
+
+    <!-- 学歴タブ -->
+    <div class="tab-content" id="tab-education">
+      <div class="section">
+        <div class="section-title">出身高校</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>高校の都道府県</label>
+            <select id="p-hs-prefecture">
+              <option value="">選択</option>
+              <option>北海道</option><option>青森県</option><option>岩手県</option>
+              <option>宮城県</option><option>秋田県</option><option>山形県</option>
+              <option>福島県</option><option>茨城県</option><option>栃木県</option>
+              <option>群馬県</option><option>埼玉県</option><option>千葉県</option>
+              <option>東京都</option><option>神奈川県</option><option>新潟県</option>
+              <option>富山県</option><option>石川県</option><option>福井県</option>
+              <option>山梨県</option><option>長野県</option><option>岐阜県</option>
+              <option>静岡県</option><option>愛知県</option><option>三重県</option>
+              <option>滋賀県</option><option>京都府</option><option>大阪府</option>
+              <option>兵庫県</option><option>奈良県</option><option>和歌山県</option>
+              <option>鳥取県</option><option>島根県</option><option>岡山県</option>
+              <option>広島県</option><option>山口県</option><option>徳島県</option>
+              <option>香川県</option><option>愛媛県</option><option>高知県</option>
+              <option>福岡県</option><option>佐賀県</option><option>長崎県</option>
+              <option>熊本県</option><option>大分県</option><option>宮崎県</option>
+              <option>鹿児島県</option><option>沖縄県</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>高校名</label>
+            <input type="text" id="p-hs-name" placeholder="○○高等学校">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>入学年</label>
+            <input type="number" id="p-hs-enroll-year" placeholder="2019">
+          </div>
+          <div class="form-group">
+            <label>入学月</label>
+            <input type="number" id="p-hs-enroll-month" placeholder="4" min="1" max="12">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>卒業年</label>
+            <input type="number" id="p-hs-graduate-year" placeholder="2022">
+          </div>
+          <div class="form-group">
+            <label>卒業月</label>
+            <input type="number" id="p-hs-graduate-month" placeholder="3" min="1" max="12">
+          </div>
+        </div>
+
+        <div class="divider" style="margin-top:12px"></div>
+        <div class="section-title">出身大学（大学院生のみ）</div>
+        <div class="form-group">
+          <label>大学名・学部・学科</label>
+          <input type="text" id="p-undergrad-name" placeholder="○○大学 ○○学部 ○○学科">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>卒業年</label>
+            <input type="number" id="p-undergrad-graduate-year" placeholder="2024">
+          </div>
+          <div class="form-group">
+            <label>卒業月</label>
+            <input type="number" id="p-undergrad-graduate-month" placeholder="3" min="1" max="12">
+          </div>
+        </div>
+
+        <div class="divider" style="margin-top:12px"></div>
+        <div class="section-title">現在の学校情報</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>学校区分</label>
+            <select id="p-school-type">
+              <option value="大学">大学</option>
+              <option value="大学院（修士）">大学院（修士）</option>
+              <option value="大学院（博士）">大学院（博士）</option>
+              <option value="短期大学">短期大学</option>
+              <option value="高等専門学校">高等専門学校</option>
+              <option value="専門学校">専門学校</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>国公私立</label>
+            <select id="p-national-type">
+              <option value="">選択</option>
+              <option>国立</option>
+              <option>公立</option>
+              <option>私立</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>大学名</label>
+          <input type="text" id="p-school-name" placeholder="○○大学">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>大学名の頭文字（ひらがな）</label>
+            <select id="p-first-char">
+              <option value="">選択</option>
+              <option>あ</option><option>い</option><option>う</option><option>え</option><option>お</option>
+              <option>か</option><option>き</option><option>く</option><option>け</option><option>こ</option>
+              <option>さ</option><option>し</option><option>す</option><option>せ</option><option>そ</option>
+              <option>た</option><option>ち</option><option>つ</option><option>て</option><option>と</option>
+              <option>な</option><option>に</option><option>ぬ</option><option>ね</option><option>の</option>
+              <option>は</option><option>ひ</option><option>ふ</option><option>へ</option><option>ほ</option>
+              <option>ま</option><option>み</option><option>む</option><option>め</option><option>も</option>
+              <option>や</option><option>ゆ</option><option>よ</option>
+              <option>ら</option><option>り</option><option>る</option><option>れ</option><option>ろ</option>
+              <option>わ</option><option>を</option><option>ん</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>大学所在地</label>
+            <select id="p-school-pref">
+              <option value="">選択</option>
+              <option>北海道</option><option>青森県</option><option>岩手県</option>
+              <option>宮城県</option><option>秋田県</option><option>山形県</option>
+              <option>福島県</option><option>茨城県</option><option>栃木県</option>
+              <option>群馬県</option><option>埼玉県</option><option>千葉県</option>
+              <option>東京都</option><option>神奈川県</option><option>新潟県</option>
+              <option>富山県</option><option>石川県</option><option>福井県</option>
+              <option>山梨県</option><option>長野県</option><option>岐阜県</option>
+              <option>静岡県</option><option>愛知県</option><option>三重県</option>
+              <option>滋賀県</option><option>京都府</option><option>大阪府</option>
+              <option>兵庫県</option><option>奈良県</option><option>和歌山県</option>
+              <option>鳥取県</option><option>島根県</option><option>岡山県</option>
+              <option>広島県</option><option>山口県</option><option>徳島県</option>
+              <option>香川県</option><option>愛媛県</option><option>高知県</option>
+              <option>福岡県</option><option>佐賀県</option><option>長崎県</option>
+              <option>熊本県</option><option>大分県</option><option>宮崎県</option>
+              <option>鹿児島県</option><option>沖縄県</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>学部</label>
+          <input type="text" id="p-faculty" placeholder="○○学部">
+        </div>
+        <div class="form-group">
+          <label>学科</label>
+          <input type="text" id="p-department" placeholder="○○学科">
+        </div>
+
+        <div class="divider" style="margin-top:12px"></div>
+        <div class="section-title">在学期間</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>入学年</label>
+            <input type="number" id="p-enroll-year" placeholder="2022">
+          </div>
+          <div class="form-group">
+            <label>入学月</label>
+            <input type="number" id="p-enroll-month" placeholder="4" min="1" max="12">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>卒業（見込み）年</label>
+            <input type="number" id="p-graduate-year" placeholder="2026">
+          </div>
+          <div class="form-group">
+            <label>卒業（見込み）月</label>
+            <input type="number" id="p-graduate-month" placeholder="3" min="1" max="12">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- アンケートタブ -->
+    <div class="tab-content" id="tab-survey">
+      <div class="section">
+        <p style="font-size:11px;color:#6b7280;background:#f3f4f6;padding:8px;border-radius:6px;margin-bottom:12px;">
+          ※ ラジオボタン・テキスト入力の共通項目を自動入力します。<br>会社固有の設問（事業部への興味など）は手動で入力してください。
+        </p>
+        <div class="section-title">基本属性</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>性別</label>
+            <select id="p-gender">
+              <option value="">選択</option>
+              <option>男性</option>
+              <option>女性</option>
+              <option>その他</option>
+              <option value="回答しない">回答しない</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>最終学歴</label>
+            <select id="p-education-level">
+              <option value="">選択</option>
+              <option>学士</option>
+              <option>修士</option>
+              <option>博士</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>高校卒業</label>
+            <select id="p-graduated-hs">
+              <option>はい</option>
+              <option>いいえ</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>海外留学経験</label>
+            <select id="p-study-abroad">
+              <option>なし</option>
+              <option>あり</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="divider" style="margin-top:12px"></div>
+        <div class="section-title">留学</div>
+        <div class="form-group">
+          <label>留学形態 <span style="color:#9ca3af;font-weight:normal;font-size:11px">※複数選択可</span></label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;margin-top:4px;">
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-study-abroad-type" value="正規留学">正規留学</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-study-abroad-type" value="交換留学">交換留学</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-study-abroad-type" value="ダブルディグリー">ダブルディグリー</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-study-abroad-type" value="自費留学">自費留学</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-study-abroad-type" value="その他">その他</label>
+          </div>
+        </div>
+
+        <div class="divider" style="margin-top:12px"></div>
+        <div class="section-title">学業</div>
+        <div class="form-group">
+          <label>ゼミ・研究室名</label>
+          <input type="text" id="p-seminar-name" placeholder="○○研究室">
+        </div>
+        <div class="form-group">
+          <label>研究内容</label>
+          <textarea id="p-seminar-content" rows="3" style="width:100%;box-sizing:border-box;padding:6px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;resize:vertical;" placeholder="研究内容（200文字程度）"></textarea>
+        </div>
+
+        <div class="divider" style="margin-top:12px"></div>
+        <div class="section-title">課外活動・その他</div>
+        <div class="form-group">
+          <label>部活・サークル名</label>
+          <input type="text" id="p-club-activity" placeholder="○○部">
+        </div>
+        <div class="divider" style="margin-top:12px"></div>
+        <div class="section-title">志望・きっかけ</div>
+        <div class="form-group">
+          <label>興味のある業界 <span style="color:#9ca3af;font-weight:normal;font-size:11px">※3つまで目安・会社ごとに要確認</span></label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;margin-top:4px;">
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="総合商社">総合商社</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="運輸">運輸</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="保険">保険</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="不動産">不動産</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="証券">証券</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="銀行">銀行</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="マスコミ">マスコミ</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="広告">広告</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="IT・情報通信">IT・情報通信</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="建設">建設</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="自動車・機械・電機メーカー">自動車・機械・電機</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="食品・飲料メーカー">食品・飲料</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="エネルギー">エネルギー</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="観光業・エンタメ">観光・エンタメ</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="人材・教育">人材・教育</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="国家公務員">国家公務員</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="政府系機関">政府系機関</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="日系コンサル">日系コンサル</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="外資系戦略コンサル">外資戦略コンサル</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="外資系総合コンサル">外資総合コンサル</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="外資系メーカー">外資系メーカー</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="外資系投資銀行">外資投資銀行</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="その他">その他</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="未定">未定</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>当社を知ったきっかけ <span style="color:#9ca3af;font-weight:normal;font-size:11px">※複数選択可・会社ごとに要確認</span></label>
+          <div id="p-how-known-group" style="display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;margin-top:4px;">
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="会社説明会・座談会">会社説明会・座談会</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="採用HP">採用HP</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="記事媒体">当社に関する記事媒体</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="ナビサイト">ナビサイト（マイナビ等）</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="告知メール">告知メール</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="社員">社員（OBOG訪問等）</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="親族">当社に勤務する親族</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="知人・友人">その他知人・友人</label>
+            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="その他">その他</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- scrollable -->
+
+  <!-- 保存ボタン -->
+  <div style="padding: 10px 16px; background: white; border-top: 1px solid #e5e7eb;">
+    <button class="btn btn-primary" id="btn-save">💾 プロフィールを保存</button>
+    <div id="save-status" class="status"></div>
+  </div>
+
+  <!-- フッター -->
+  <div class="footer">
+    <span class="footer-note">🔒 データはPC内のみに保存</span>
+    <button class="btn btn-danger" id="btn-lock">ロック</button>
+  </div>
+
+</div><!-- screen-main -->
+
+<script src="../crypto/crypto.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

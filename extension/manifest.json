@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "就活マイページ 自動入力",
+  "version": "0.1.0",
+  "description": "企業マイページへの基本情報入力を自動化します。データはすべてお使いのPC内にのみ保存されます。",
+  "permissions": ["storage", "activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "就活マイページ 自動入力",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}
