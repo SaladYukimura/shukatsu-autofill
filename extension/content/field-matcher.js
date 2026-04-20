@@ -51,11 +51,11 @@ const FieldMatcher = (() => {
     // 携帯電話（axol: keitai_h/m/l → 3分割配列）
     mobile:        ['mobile', 'cell', 'keitai_tel', 'keitai_phone', 'tel_m', 'sp_tel', 'ketai', 'kttel',
                     'keitai_h', 'keitai_m', 'keitai_l'],   // axol
-    // 携帯メールアドレス（スキップ対象）
-    mobileEmail:   ['keitai_mail', 'keitai_address', 'mobile_mail', 'mobile_email', 'sp_mail'],
+    // スキップ対象メールアドレス（携帯メール・その他任意アドレス）
+    mobileEmail:   ['keitai_mail', 'keitai_address', 'mobile_mail', 'mobile_email', 'sp_mail',
+                    'kmail'],                               // axol: その他アドレス（任意）→ 入力不要
     // email2 を先に定義することで email の prefix match より優先される
-    emailConfirm:  ['email2', 'mail2', 'e_mail2', 'mailaddr2', 'email_confirm', 'mail_confirm',
-                    'kmail'],                               // axol: メールアドレス確認
+    emailConfirm:  ['email2', 'mail2', 'e_mail2', 'mailaddr2', 'email_confirm', 'mail_confirm'],
     email:         ['email', 'mail', 'e_mail', 'mailaddr'],
     emailLocal:    ['account', 'email_account', 'mail_account', 'local_part', 'userid', 'mailid'],
     emailDomain:   ['domain', 'email_domain', 'mail_domain', 'domain_part', 'mailhost'],
