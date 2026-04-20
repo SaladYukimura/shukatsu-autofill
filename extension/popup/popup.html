@@ -2,14 +2,14 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>就活マイページ 自動入力</title>
+  <title>就活 AutoFill</title>
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
 
 <div class="header">
-  <span>📋</span>
-  <h1>就活マイページ 自動入力</h1>
+  <img src="../icons/icon48.png" alt="icon">
+  <h1>就活 AutoFill</h1>
 </div>
 
 <!-- ===== セットアップ画面（初回） ===== -->
@@ -61,7 +61,7 @@
     </button>
     <div id="fill-status" class="status"></div>
 
-    <!-- 大学選択補助（マルチステップ選択の手動補助） -->
+    <!-- 大学選択補助 -->
     <div class="edu-hint" id="edu-hint">
       <div class="edu-title">🎓 大学選択の補助情報（手動でコピーしてください）</div>
       <div class="edu-row">
@@ -157,9 +157,9 @@
     <div class="tab-content" id="tab-address">
       <div class="section">
         <div class="section-title">住所</div>
-        <div class="form-group" style="display:flex;align-items:center;gap:8px;background:#eff6ff;padding:8px;border-radius:6px;margin-bottom:10px;">
-          <input type="checkbox" id="p-same-address" style="width:auto;margin:0;" checked>
-          <label for="p-same-address" style="margin:0;font-size:12px;color:#1d4ed8;cursor:pointer;">「休暇中の住所は現住所と同じ」を自動でチェックする</label>
+        <div class="same-address-box">
+          <input type="checkbox" id="p-same-address" checked>
+          <label for="p-same-address">「休暇中の住所は現住所と同じ」を自動でチェックする</label>
         </div>
         <div class="form-group">
           <label>郵便番号（ハイフンあり）</label>
@@ -192,7 +192,7 @@
           <input type="text" id="p-city" placeholder="千代田区">
         </div>
         <div class="form-group">
-          <label>番地・丁目（全角）<span style="color:#9ca3af;font-weight:normal;font-size:11px">　i-webでは上と結合して入力</span></label>
+          <label>番地・丁目（全角）<span style="color:#3a4e6e;font-weight:normal;font-size:11px">　i-webでは上と結合して入力</span></label>
           <input type="text" id="p-street" placeholder="丸の内１－１－１">
         </div>
         <div class="form-group">
@@ -377,8 +377,8 @@
     <!-- アンケートタブ -->
     <div class="tab-content" id="tab-survey">
       <div class="section">
-        <p style="font-size:11px;color:#6b7280;background:#f3f4f6;padding:8px;border-radius:6px;margin-bottom:12px;">
-          ※ ラジオボタン・テキスト入力の共通項目を自動入力します。<br>会社固有の設問（事業部への興味など）は手動で入力してください。
+        <p class="survey-note">
+          ※ ラジオボタン・テキスト入力の共通項目を自動入力します。<br>会社固有の設問は手動で入力してください。
         </p>
         <div class="section-title">基本属性</div>
         <div class="form-row">
@@ -422,13 +422,13 @@
         <div class="divider" style="margin-top:12px"></div>
         <div class="section-title">留学</div>
         <div class="form-group">
-          <label>留学形態 <span style="color:#9ca3af;font-weight:normal;font-size:11px">※複数選択可</span></label>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;margin-top:4px;">
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-study-abroad-type" value="正規留学">正規留学</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-study-abroad-type" value="交換留学">交換留学</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-study-abroad-type" value="ダブルディグリー">ダブルディグリー</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-study-abroad-type" value="自費留学">自費留学</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-study-abroad-type" value="その他">その他</label>
+          <label>留学形態 <span style="color:#3a4e6e;font-weight:normal;font-size:11px">※複数選択可</span></label>
+          <div class="checkbox-grid">
+            <label class="checkbox-label"><input type="checkbox" name="p-study-abroad-type" value="正規留学">正規留学</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-study-abroad-type" value="交換留学">交換留学</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-study-abroad-type" value="ダブルディグリー">ダブルディグリー</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-study-abroad-type" value="自費留学">自費留学</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-study-abroad-type" value="その他">その他</label>
           </div>
         </div>
 
@@ -440,7 +440,7 @@
         </div>
         <div class="form-group">
           <label>研究内容</label>
-          <textarea id="p-seminar-content" rows="3" style="width:100%;box-sizing:border-box;padding:6px;border:1px solid #d1d5db;border-radius:6px;font-size:13px;resize:vertical;" placeholder="研究内容（200文字程度）"></textarea>
+          <textarea id="p-seminar-content" rows="3" placeholder="研究内容（200文字程度）"></textarea>
         </div>
 
         <div class="divider" style="margin-top:12px"></div>
@@ -449,49 +449,50 @@
           <label>部活・サークル名</label>
           <input type="text" id="p-club-activity" placeholder="○○部">
         </div>
+
         <div class="divider" style="margin-top:12px"></div>
         <div class="section-title">志望・きっかけ</div>
         <div class="form-group">
-          <label>興味のある業界 <span style="color:#9ca3af;font-weight:normal;font-size:11px">※3つまで目安・会社ごとに要確認</span></label>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;margin-top:4px;">
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="総合商社">総合商社</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="運輸">運輸</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="保険">保険</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="不動産">不動産</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="証券">証券</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="銀行">銀行</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="マスコミ">マスコミ</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="広告">広告</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="IT・情報通信">IT・情報通信</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="建設">建設</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="自動車・機械・電機メーカー">自動車・機械・電機</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="食品・飲料メーカー">食品・飲料</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="エネルギー">エネルギー</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="観光業・エンタメ">観光・エンタメ</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="人材・教育">人材・教育</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="国家公務員">国家公務員</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="政府系機関">政府系機関</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="日系コンサル">日系コンサル</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="外資系戦略コンサル">外資戦略コンサル</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="外資系総合コンサル">外資総合コンサル</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="外資系メーカー">外資系メーカー</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="外資系投資銀行">外資投資銀行</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="その他">その他</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-interested-industries" value="未定">未定</label>
+          <label>興味のある業界 <span style="color:#3a4e6e;font-weight:normal;font-size:11px">※3つまで目安・会社ごとに要確認</span></label>
+          <div class="checkbox-grid">
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="総合商社">総合商社</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="運輸">運輸</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="保険">保険</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="不動産">不動産</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="証券">証券</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="銀行">銀行</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="マスコミ">マスコミ</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="広告">広告</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="IT・情報通信">IT・情報通信</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="建設">建設</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="自動車・機械・電機メーカー">自動車・機械・電機</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="食品・飲料メーカー">食品・飲料</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="エネルギー">エネルギー</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="観光業・エンタメ">観光・エンタメ</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="人材・教育">人材・教育</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="国家公務員">国家公務員</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="政府系機関">政府系機関</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="日系コンサル">日系コンサル</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="外資系戦略コンサル">外資戦略コンサル</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="外資系総合コンサル">外資総合コンサル</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="外資系メーカー">外資系メーカー</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="外資系投資銀行">外資投資銀行</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="その他">その他</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-interested-industries" value="未定">未定</label>
           </div>
         </div>
         <div class="form-group">
-          <label>当社を知ったきっかけ <span style="color:#9ca3af;font-weight:normal;font-size:11px">※複数選択可・会社ごとに要確認</span></label>
-          <div id="p-how-known-group" style="display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;margin-top:4px;">
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="会社説明会・座談会">会社説明会・座談会</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="採用HP">採用HP</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="記事媒体">当社に関する記事媒体</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="ナビサイト">ナビサイト（マイナビ等）</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="告知メール">告知メール</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="社員">社員（OBOG訪問等）</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="親族">当社に勤務する親族</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="知人・友人">その他知人・友人</label>
-            <label style="display:flex;align-items:center;gap:4px;font-weight:normal;cursor:pointer;font-size:12px;"><input type="checkbox" name="p-how-known" value="その他">その他</label>
+          <label>当社を知ったきっかけ <span style="color:#3a4e6e;font-weight:normal;font-size:11px">※複数選択可</span></label>
+          <div class="checkbox-grid">
+            <label class="checkbox-label"><input type="checkbox" name="p-how-known" value="会社説明会・座談会">会社説明会・座談会</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-how-known" value="採用HP">採用HP</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-how-known" value="記事媒体">記事媒体</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-how-known" value="ナビサイト">ナビサイト</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-how-known" value="告知メール">告知メール</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-how-known" value="社員">社員（OB/OG訪問）</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-how-known" value="親族">勤務する親族</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-how-known" value="知人・友人">知人・友人</label>
+            <label class="checkbox-label"><input type="checkbox" name="p-how-known" value="その他">その他</label>
           </div>
         </div>
       </div>
@@ -500,7 +501,7 @@
   </div><!-- scrollable -->
 
   <!-- 保存ボタン -->
-  <div style="padding: 10px 16px; background: white; border-top: 1px solid #e5e7eb;">
+  <div class="save-area">
     <button class="btn btn-primary" id="btn-save">💾 プロフィールを保存</button>
     <div id="save-status" class="status"></div>
   </div>
