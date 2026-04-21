@@ -92,7 +92,8 @@ const FieldMatcher = (() => {
                          'zemi'],                           // axol
     seminarContent:     ['seminar_content', 'zemi_content', 'research_content'],
     clubActivity:       ['club_name', 'circle_name', 'club1', 'dantai_name1',
-                         'club'],                           // axol
+                         'club',                            // axol
+                         'bikob'],                          // i-web
     howKnown:           ['how_known', 'shiru_keiki', 'motive'],
   };
 
