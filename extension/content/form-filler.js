@@ -26,10 +26,19 @@ const FormFiller = (() => {
 
   function clickJqRadio(radio) {
     const jqA = radio.closest('.jqTransformRadioWrapper')?.querySelector('a.jqTransformRadio');
-    if (jqA) jqA.click();
-    // jqTransformのクリックだけでは checked が更新されない場合があるため、直接セットも行う
+    if (jqA) {
+      // MAIN world: ページの jQuery でトリガーするのが最も確実
+      if (typeof jQuery !== 'undefined') {
+        jQuery(jqA).trigger('click');
+      } else {
+        jqA.click();
+      }
+    }
+    // 確実に checked をセット
     radio.checked = true;
     radio.dispatchEvent(new Event('change', { bubbles: true }));
+    // onclick 属性がある場合も実行（checkGraduateSchool 等）
+    if (radio.onclick) radio.onclick.call(radio);
   }
 
   function getCheckboxLabel(cb) {
@@ -54,11 +63,12 @@ const FormFiller = (() => {
   function clickJqCheckbox(cb, shouldCheck) {
     if (cb.checked === shouldCheck) return;
     const jqA = cb.closest('.jqTransformCheckboxWrapper')?.querySelector('a.jqTransformCheckbox');
-    if (jqA) jqA.click();
-    else {
-      cb.checked = shouldCheck;
-      cb.dispatchEvent(new Event('change', { bubbles: true }));
+    if (jqA) {
+      if (typeof jQuery !== 'undefined') jQuery(jqA).trigger('click');
+      else jqA.click();
     }
+    cb.checked = shouldCheck;
+    cb.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   function selectCheckboxesByText(checkboxes, values) {
