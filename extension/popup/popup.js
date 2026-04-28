@@ -199,16 +199,13 @@
 
     try {
       // 未注入の場合のみ注入（2回押し対策）
-      // world:'MAIN' → jQueryイベントハンドラー（jqTransformなど）と同じコンテキストで動作
       const [loaded] = await chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        world: 'MAIN',
         func: () => typeof FieldMatcher !== 'undefined',
       });
       if (!loaded.result) {
         await chrome.scripting.executeScript({
           target: { tabId: tab.id },
-          world: 'MAIN',
           files: [
             'content/converters.js',
             'content/field-matcher.js',
@@ -218,10 +215,9 @@
         });
       }
 
-      // フォーム入力を実行（page context で動作）
+      // フォーム入力を実行
       const [execResult] = await chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        world: 'MAIN',
         func: (profile) => {
           try {
             const hostname = location.hostname;
