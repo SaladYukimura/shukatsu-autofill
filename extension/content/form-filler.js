@@ -27,10 +27,9 @@ const FormFiller = (() => {
   function clickJqRadio(radio) {
     const jqA = radio.closest('.jqTransformRadioWrapper')?.querySelector('a.jqTransformRadio');
     if (jqA) jqA.click();
-    else {
-      radio.checked = true;
-      radio.dispatchEvent(new Event('change', { bubbles: true }));
-    }
+    // jqTransformのクリックだけでは checked が更新されない場合があるため、直接セットも行う
+    radio.checked = true;
+    radio.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   function getCheckboxLabel(cb) {
@@ -350,5 +349,5 @@ const FormFiller = (() => {
     return filledCount;
   }
 
-  return { fillAll, setInputValue, setSelectValue, clickJqRadio, clickJqCheckbox };
+  return { fillAll, setInputValue, setSelectValue, clickJqRadio, clickJqCheckbox, selectRadioByText };
 })();

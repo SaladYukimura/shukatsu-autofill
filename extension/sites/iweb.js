@@ -43,6 +43,13 @@ const IWebSchool = (() => {
     return false;
   }
 
+  // value一致が失敗したときのラベルテキスト一致フォールバック
+  function selectRadioByLabel(name, labelText) {
+    const radios = Array.from(document.querySelectorAll(`input[type="radio"][name="${name}"]`));
+    if (!radios.length) return false;
+    return FormFiller.selectRadioByText(radios, labelText);
+  }
+
   function isSchoolSelectPage() {
     return !!document.querySelector('input[type="radio"][name="gkbn"]');
   }
@@ -51,14 +58,29 @@ const IWebSchool = (() => {
     const edu = profile.education || {};
     let filled = 0;
 
-    const gkbnVal = GKBN_MAP[edu.type];
-    if (gkbnVal && selectRadio('gkbn', gkbnVal)) filled++;
+    // 学校区分: value一致 → ラベルテキスト一致の順で試みる
+    if (edu.type) {
+      const gkbnVal = GKBN_MAP[edu.type];
+      const ok = (gkbnVal && selectRadio('gkbn', gkbnVal)) || selectRadioByLabel('gkbn', edu.type);
+      if (ok) filled++;
+    }
 
-    const gonVal = GON_MAP[edu.firstChar];
-    if (gonVal && selectRadio('gon', gonVal)) filled++;
+    // 頭文字: カタカナvalue一致 → ひらがなラベル一致の順で試みる
+    if (edu.firstChar) {
+      const gonVal = GON_MAP[edu.firstChar];
+      const ok = (gonVal && selectRadio('gon', gonVal)) || selectRadioByLabel('gon', edu.firstChar);
+      if (ok) filled++;
+    }
 
-    const prefVal = PREF_MAP[edu.prefecture];
-    if (prefVal && selectRadio('dken', prefVal)) filled++;
+    // 所在地: チェックボックスを有効化してから都道府県を選択
+    if (edu.prefecture) {
+      const prefCb = document.querySelector('input[type="checkbox"][name="kenflg"], input[type="checkbox"][name="dkenflg"], input[type="checkbox"][name="pref_flg"]');
+      if (prefCb && !prefCb.checked) FormFiller.clickJqCheckbox(prefCb, true);
+
+      const prefVal = PREF_MAP[edu.prefecture];
+      const ok = (prefVal && selectRadio('dken', prefVal)) || selectRadioByLabel('dken', edu.prefecture);
+      if (ok) filled++;
+    }
 
     return filled;
   }
