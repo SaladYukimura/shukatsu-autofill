@@ -26,19 +26,38 @@ const FormFiller = (() => {
 
   function clickJqRadio(radio) {
     const jqA = radio.closest('.jqTransformRadioWrapper')?.querySelector('a.jqTransformRadio');
+
     if (jqA) {
-      // MAIN world: ページの jQuery でトリガーするのが最も確実
-      if (typeof jQuery !== 'undefined') {
-        jQuery(jqA).trigger('click');
+      // jQuery / $ どちらのエイリアスでも対応（MAIN world）
+      const jq = (typeof jQuery !== 'undefined' && jQuery.fn) ? jQuery
+               : (typeof $       !== 'undefined' && $.fn)      ? $
+               : null;
+
+      if (jq) {
+        try { jq(jqA).trigger('click'); } catch (_) {}
       } else {
         jqA.click();
       }
+
+      // jQuery が動かない場合も視覚状態を直接更新（jqTransformのCSSクラス操作）
+      const allInGroup = document.querySelectorAll(
+        `input[type="radio"][name="${CSS.escape(radio.name)}"]`
+      );
+      allInGroup.forEach(r => {
+        r.closest('.jqTransformRadioWrapper')
+          ?.querySelector('a.jqTransformRadio')
+          ?.classList.remove('jqTransformRadioChecked');
+      });
+      jqA.classList.add('jqTransformRadioChecked');
     }
+
     // 確実に checked をセット
     radio.checked = true;
     radio.dispatchEvent(new Event('change', { bubbles: true }));
-    // onclick 属性がある場合も実行（checkGraduateSchool 等）
-    if (radio.onclick) radio.onclick.call(radio);
+    // onclick 属性（checkGraduateSchool 等）を明示的に実行
+    if (typeof radio.onclick === 'function') {
+      try { radio.onclick.call(radio); } catch (_) {}
+    }
   }
 
   function getCheckboxLabel(cb) {
@@ -64,7 +83,10 @@ const FormFiller = (() => {
     if (cb.checked === shouldCheck) return;
     const jqA = cb.closest('.jqTransformCheckboxWrapper')?.querySelector('a.jqTransformCheckbox');
     if (jqA) {
-      if (typeof jQuery !== 'undefined') jQuery(jqA).trigger('click');
+      const jq = (typeof jQuery !== 'undefined' && jQuery.fn) ? jQuery
+               : (typeof $       !== 'undefined' && $.fn)      ? $
+               : null;
+      if (jq) { try { jq(jqA).trigger('click'); } catch (_) {} }
       else jqA.click();
     }
     cb.checked = shouldCheck;
