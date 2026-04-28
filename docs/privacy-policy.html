@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>プライバシーポリシー — 就活 AutoFill</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+      font-size: 15px;
+      color: #1a1a1a;
+      background: #f7f8fa;
+      line-height: 1.8;
+    }
+    header {
+      background: linear-gradient(135deg, #0f2040 0%, #1a3a6e 100%);
+      color: white;
+      padding: 28px 0;
+      text-align: center;
+    }
+    header .logo {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin-bottom: 4px;
+    }
+    header .sub {
+      font-size: 13px;
+      opacity: 0.7;
+    }
+    .container {
+      max-width: 760px;
+      margin: 40px auto;
+      padding: 0 20px 60px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 36px 40px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #0f2040;
+      margin-bottom: 6px;
+    }
+    .updated {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 28px;
+    }
+    h2 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #0f2040;
+      margin: 28px 0 10px;
+      padding-left: 10px;
+      border-left: 3px solid #1a3a6e;
+    }
+    p { margin-bottom: 10px; color: #333; }
+    ul {
+      padding-left: 20px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    ul li { margin-bottom: 4px; }
+    .highlight {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 14px;
+      color: #1e40af;
+    }
+    .highlight strong { display: block; margin-bottom: 4px; font-size: 14px; }
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 32px;
+    }
+    a { color: #1a3a6e; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">🤖 就活 AutoFill</div>
+    <div class="sub">Chrome拡張機能</div>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <h1>プライバシーポリシー</h1>
+      <p class="updated">最終更新日：2026年4月29日</p>
+
+      <div class="highlight">
+        <strong>📌 要点</strong>
+        入力されたすべてのデータはお使いのPC内にのみ保存されます。外部サーバーへの送信は一切行いません。
+      </div>
+
+      <h2>1. 収集する情報</h2>
+      <p>就活 AutoFill は、フォーム自動入力のためにユーザーが自ら入力した以下の情報をローカルに保存します。</p>
+      <ul>
+        <li>氏名（漢字・カタカナ）</li>
+        <li>生年月日</li>
+        <li>住所（郵便番号・都道府県・市区町村・番地・建物名）</li>
+        <li>電話番号・携帯電話番号</li>
+        <li>メールアドレス</li>
+        <li>大学情報（学校名・学部・学科・入学・卒業年月）</li>
+        <li>その他、ユーザーが任意で入力したプロフィール情報</li>
+      </ul>
+
+      <h2>2. データの保存場所</h2>
+      <p>すべてのデータは <strong>ユーザーのデバイス上</strong>（Chromeの <code>chrome.storage.local</code>）にのみ保存されます。クラウドサーバーや外部データベースへの保存は行いません。</p>
+
+      <h2>3. データの暗号化</h2>
+      <p>ユーザーがマスターパスワードを設定した場合、保存データは <strong>AES-256-GCM方式</strong> で暗号化されます。暗号化キーはユーザーのパスワードから PBKDF2 を用いて生成され、開発者を含む第三者がデータにアクセスする手段はありません。</p>
+
+      <h2>4. 外部への送信</h2>
+      <p>就活 AutoFill は、いかなる個人情報も外部サーバーへ送信しません。</p>
+      <ul>
+        <li>アナリティクス：収集しません</li>
+        <li>エラーレポート：収集しません</li>
+        <li>広告トラッキング：行いません</li>
+        <li>第三者へのデータ提供：行いません</li>
+      </ul>
+
+      <h2>5. アクセスするページ</h2>
+      <p>本拡張機能は、ユーザーが「自動入力」ボタンをクリックした際にのみ、現在表示中のページのフォームフィールドにアクセスします。ユーザーの操作なしにページ内容を読み取ることはありません。</p>
+
+      <h2>6. データの削除</h2>
+      <p>保存されたデータはいつでも拡張機能のポップアップからリセットできます。また、Chromeの拡張機能を削除することで、保存データもあわせて完全に削除されます。</p>
+
+      <h2>7. ソースコードの公開</h2>
+      <p>本拡張機能はオープンソース（MITライセンス）で公開されています。動作内容はソースコードで確認できます。</p>
+      <p><a href="https://github.com/SaladYukimura/shukatsu-autofill" target="_blank">https://github.com/SaladYukimura/shukatsu-autofill</a></p>
+
+      <h2>8. ポリシーの変更</h2>
+      <p>本ポリシーを変更する場合は、このページを更新します。重要な変更がある場合はGitHubのリリースノートでもお知らせします。</p>
+
+      <h2>9. お問い合わせ</h2>
+      <p>本ポリシーに関するご質問は、GitHubのIssueよりお問い合わせください。</p>
+      <p><a href="https://github.com/SaladYukimura/shukatsu-autofill/issues" target="_blank">https://github.com/SaladYukimura/shukatsu-autofill/issues</a></p>
+    </div>
+
+    <footer>
+      &copy; 2026 就活 AutoFill — MIT License
+    </footer>
+  </div>
+</body>
+</html>
